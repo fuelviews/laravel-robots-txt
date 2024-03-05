@@ -1,36 +1,79 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Fuelviews\RobotsTxt\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use Fuelviews\RobotsTxt\RobotsTxtServiceProvider;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class TestCase
+ *
+ * This class is the base test case for the laravel-robots-txt package.
+ * It extends the Orchestra\Testbench\TestCase class.
+ */
 class TestCase extends Orchestra
 {
+    /**
+     * Set up the test environment.
+     *
+     * This method is called before each test method is executed.
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'VendorName\\Skeleton\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        $this->setUpStorage();
     }
 
-    protected function getPackageProviders($app)
+    /**
+     * Get the service providers for the test environment.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return array
+     */
+    protected function getPackageProviders($app): array
     {
         return [
-            SkeletonServiceProvider::class,
+            RobotsTxtServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    /**
+     * Set up the environment configuration for the test application.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    public function getEnvironmentSetUp($app): void
     {
-        config()->set('database.default', 'testing');
+        $app['config']->get('app.url', 'https://example.com/');
+        $app['config']->set('app.env', 'production');
+        $app['config']->get('robots-txt.deny_development_url', 'development.');
+        $app['config']->get('robots-txt.sitemap', [
+            'sitemap.xml'
+        ]);
+    }
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
-        $migration->up();
-        */
+    /**
+     * Set up fake storage for tests.
+     */
+    protected function setUpStorage(): void
+    {
+        Storage::fake('public');
+    }
+
+    /**
+     * Helper method to set application configurations for testing.
+     *
+     * @param  array  $configurations
+     * @return void
+     */
+    protected function setTestConfigurations(array $configurations): void
+    {
+        foreach ($configurations as $key => $value) {
+            Config::set($key, $value);
+        }
     }
 }
