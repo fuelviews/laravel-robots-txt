@@ -2,16 +2,18 @@
     "name": "fuelviews/laravel-robots-txt",
     "description": "Fuelviews laravel robots.txt package",
     "keywords": [
-        "Fuelviews",
+        "fuelviews",
         "laravel",
-        "laravel-robots-txt"
+        "laravel-robots-txt",
+        "robots",
+        "php"
     ],
     "homepage": "https://github.com/fuelviews/laravel-robots-txt",
     "license": "MIT",
     "authors": [
         {
             "name": "thejmitchener",
-            "email": "joshua@fuelviews.com",
+            "email": "support@fuelviews.com",
             "role": "Developer"
         }
     ],
