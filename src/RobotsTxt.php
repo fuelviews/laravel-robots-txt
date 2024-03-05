@@ -18,7 +18,6 @@ class RobotsTxt
      *
      * @param  string  $disk
      * @param  string  $path
-     * @return void
      */
     public function saveToFile($disk, $path): void
     {
@@ -29,8 +28,6 @@ class RobotsTxt
 
     /**
      * Generate the content of the robots.txt file.
-     *
-     * @return string
      */
     public function generate(): string
     {
@@ -46,7 +43,7 @@ class RobotsTxt
         $rules = Config::get('robots-txt.user_agents', []);
         $sitemap = Config::get('robots-txt.sitemap', ['sitemap.xml']);
 
-        $txt = "";
+        $txt = '';
 
         foreach ($rules as $agent => $directives) {
             $txt .= "User-agent: $agent\n";
@@ -61,7 +58,7 @@ class RobotsTxt
         $sitemaps = Config::get('robots-txt.sitemap', []);
 
         foreach ($sitemaps as $sitemap) {
-            $txt .= "Sitemap: " . $appUrl . "$sitemap\n";
+            $txt .= 'Sitemap: '.$appUrl."$sitemap\n";
         }
 
         return $txt;

@@ -25,7 +25,7 @@ class RobotsTxtSitemapTest extends TestCase
 
         $baseUrl = config('app.url');
 
-        $this->assertStringContainsString('Sitemap: ' . $baseUrl . 'sitemap.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap.xml', $robotsContent);
     }
 
     /**
@@ -36,10 +36,10 @@ class RobotsTxtSitemapTest extends TestCase
     public function it_includes_multiple_sitemaps_in_robots_txt()
     {
         $this->setTestConfigurations([
-            'robots-txt.sitemap' =>  [
+            'robots-txt.sitemap' => [
                 'sitemap.xml',
                 'sitemap_pages.xml',
-                'sitemap_posts.xml'
+                'sitemap_posts.xml',
             ],
         ]);
 
@@ -48,8 +48,8 @@ class RobotsTxtSitemapTest extends TestCase
 
         $baseUrl = config('app.url');
 
-        $this->assertStringContainsString('Sitemap: ' . $baseUrl . 'sitemap.xml', $robotsContent);
-        $this->assertStringContainsString('Sitemap: ' . $baseUrl . 'sitemap_pages.xml', $robotsContent);
-        $this->assertStringContainsString('Sitemap: ' . $baseUrl . 'sitemap_posts.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap_pages.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap_posts.xml', $robotsContent);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Fuelviews\RobotsTxt;
 
+use Fuelviews\RobotsTxt\Commands\RobotsTxtClearCommand;
 use Fuelviews\RobotsTxt\Http\Controllers\RobotsTxtController;
+use Fuelviews\RobotsTxt\Services\RobotsTxtService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Fuelviews\RobotsTxt\Commands\RobotsTxtClearCommand;
-use Fuelviews\RobotsTxt\Services\RobotsTxtService;
 
 /**
  * Class RobotsTxtServiceProvider
@@ -20,9 +20,6 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
 {
     /**
      * Configure the package.
-     *
-     * @param  Package  $package
-     * @return void
      */
     public function configurePackage(Package $package): void
     {

@@ -31,8 +31,6 @@ class RobotsTxtClearCommand extends Command
      * Handle the console command.
      *
      * This method is invoked when the command is executed.
-     *
-     * @return int
      */
     public function handle(): int
     {

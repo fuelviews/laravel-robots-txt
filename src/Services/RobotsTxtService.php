@@ -2,10 +2,10 @@
 
 namespace Fuelviews\RobotsTxt\Services;
 
+use Fuelviews\RobotsTxt\RobotsTxt;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use Fuelviews\RobotsTxt\RobotsTxt;
 
 /**
  * Class RobotsTxtService
@@ -13,27 +13,20 @@ use Fuelviews\RobotsTxt\RobotsTxt;
  * This class provides functionality for managing the robots.txt file,
  * including generating its content, caching it, and regenerating it when necessary.
  */
-
 class RobotsTxtService
 {
     /**
      * The disk where the robots.txt file is stored.
-     *
-     * @var mixed
      */
     protected mixed $disk;
 
     /**
      * The path to the robots.txt file.
-     *
-     * @var string
      */
     protected string $path;
 
     /**
      * The cache key for storing the checksum of the robots.txt file.
-     *
-     * @var string
      */
     protected string $cacheKey = 'robots-txt.checksum';
 
@@ -52,8 +45,6 @@ class RobotsTxtService
      * Get the contents of the robots.txt file.
      *
      * If the file needs to be regenerated, it will be done before retrieving its contents.
-     *
-     * @return string
      */
     public function getContent(): string
     {
@@ -66,15 +57,13 @@ class RobotsTxtService
 
     /**
      * Check if the robots.txt file needs to be regenerated.
-     *
-     * @return bool
      */
     protected function needsRegeneration(): bool
     {
         $currentChecksum = $this->computeChecksum();
         $storedChecksum = Cache::get($this->cacheKey, '');
 
-        if (!Storage::disk($this->disk)->exists($this->path) || $currentChecksum !== $storedChecksum) {
+        if (! Storage::disk($this->disk)->exists($this->path) || $currentChecksum !== $storedChecksum) {
             return true;
         }
 
@@ -99,8 +88,6 @@ class RobotsTxtService
      * Compute the checksum for the robots.txt file.
      *
      * The checksum is based on the configuration and environment settings.
-     *
-     * @return string
      */
     protected function computeChecksum(): string
     {

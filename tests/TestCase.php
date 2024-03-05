@@ -2,10 +2,10 @@
 
 namespace Fuelviews\RobotsTxt\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Fuelviews\RobotsTxt\RobotsTxtServiceProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 /**
  * Class TestCase
@@ -31,7 +31,6 @@ class TestCase extends Orchestra
      * Get the service providers for the test environment.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     * @return array
      */
     protected function getPackageProviders($app): array
     {
@@ -44,7 +43,6 @@ class TestCase extends Orchestra
      * Set up the environment configuration for the test application.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     * @return void
      */
     public function getEnvironmentSetUp($app): void
     {
@@ -52,7 +50,7 @@ class TestCase extends Orchestra
         $app['config']->set('app.env', 'production');
         $app['config']->get('robots-txt.deny_development_url', 'development.');
         $app['config']->get('robots-txt.sitemap', [
-            'sitemap.xml'
+            'sitemap.xml',
         ]);
     }
 
@@ -66,9 +64,6 @@ class TestCase extends Orchestra
 
     /**
      * Helper method to set application configurations for testing.
-     *
-     * @param  array  $configurations
-     * @return void
      */
     protected function setTestConfigurations(array $configurations): void
     {

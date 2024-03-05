@@ -23,7 +23,7 @@ class RobotsTxtEnvironmentTest extends TestCase
             'robots-txt.user_agents' => [
                 '*' => [
                     'Allow' => [
-                        '/'
+                        '/',
                     ],
                     'Disallow' => [
                         '/admin',
@@ -53,14 +53,12 @@ class RobotsTxtEnvironmentTest extends TestCase
 
         $sitemaps = config('robots-txt.sitemap');
         foreach ($sitemaps as $sitemapPath) {
-            $response->assertSee('Sitemap: ' . ($baseUrl) . $sitemapPath);
+            $response->assertSee('Sitemap: '.($baseUrl).$sitemapPath);
         }
     }
 
     /**
      * Data provider for environments.
-     *
-     * @return array
      */
     public static function environmentProvider(): array
     {
@@ -74,6 +72,7 @@ class RobotsTxtEnvironmentTest extends TestCase
      * Test if all paths are disallowed in non-production environments.
      *
      * @test
+     *
      * @dataProvider environmentProvider
      */
     public function it_disallows_all_in_non_production_environment($env)
@@ -98,7 +97,7 @@ class RobotsTxtEnvironmentTest extends TestCase
     {
         $baseUrl = config('app.url');
         $parsedUrl = parse_url($baseUrl);
-        $developmentDomain = 'robots-txt.deny_url_pattern' . $parsedUrl['host'];
+        $developmentDomain = 'robots-txt.deny_url_pattern'.$parsedUrl['host'];
 
         $this->setTestConfigurations([
             'app.url' => $developmentDomain,

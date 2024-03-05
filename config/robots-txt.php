@@ -23,7 +23,7 @@ return [
     'user_agents' => [
         '*' => [
             'Allow' => [
-                '/'
+                '/',
             ],
             'Disallow' => [
                 '/admin',
