@@ -24,13 +24,25 @@ This is the contents of the published config file:
 ```php
 <?php
 
+/**
+ * Configuration File: robots-txt.php
+ *
+ * This file contains configuration options for the robots.txt generation.
+ */
+
 return [
+    /**
+     * The disk where the robots.txt file will be saved
+     */
     'disk' => 'public',
-    'deny_development_url' => 'development.test2',
+
+    /**
+     * User agent rules for different paths
+     */
     'user_agents' => [
         '*' => [
             'Allow' => [
-                '/'
+                '/',
             ],
             'Disallow' => [
                 '/admin',
@@ -38,16 +50,14 @@ return [
             ],
         ],
     ],
+
+    /**
+     * Sitemaps to include in robots.txt
+     */
     'sitemap' => [
         'sitemap.xml',
     ],
 ];
-```
-
-You can manually clear the robots.txt cache with:
-
-```bash
-php artisan robots-txt:clear
 ```
 
 ## Usage

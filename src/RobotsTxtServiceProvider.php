@@ -2,10 +2,7 @@
 
 namespace Fuelviews\RobotsTxt;
 
-use Fuelviews\RobotsTxt\Commands\RobotsTxtClearCommand;
 use Fuelviews\RobotsTxt\Http\Controllers\RobotsTxtController;
-use Fuelviews\RobotsTxt\Services\RobotsTxtService;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -25,23 +22,23 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-robots-txt')
-            ->hasConfigFile('robots-txt')
-            ->publishesServiceProvider('RobotsTxtServiceProvider')
-            ->hasCommand(RobotsTxtClearCommand::class);
+            ->hasConfigFile('robots-txt');
     }
 
     /**
      * Bootstrap any application services.
      *
      * This method performs bootstrapping tasks when the package is booted.
-     *
-     * @throws BindingResolutionException
      */
     public function bootingPackage(): void
     {
-        $robotsTxtService = $this->app->make(RobotsTxtService::class);
-        $robotsTxtService->deletePublicRobotsTxt();
+        $path = public_path('robots.txt');
+
+        if (file_exists($path)) {
+            @unlink($path);
+        }
     }
+
 
     /**
      * Register package routes.

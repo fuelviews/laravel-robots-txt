@@ -13,11 +13,6 @@ return [
     'disk' => 'public',
 
     /**
-     * The domain pattern to deny access in development environment
-     */
-    'deny_development_url' => 'development.',
-
-    /**
      * User agent rules for different paths
      */
     'user_agents' => [
@@ -33,7 +28,7 @@ return [
     ],
 
     /**
-     * List of sitemaps to include in robots.txt
+     * Sitemaps to include in robots.txt
      */
     'sitemap' => [
         'sitemap.xml',

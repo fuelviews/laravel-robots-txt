@@ -2,9 +2,9 @@
 
 namespace Fuelviews\RobotsTxt;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 /**
  * Class RobotsTxt
@@ -13,35 +13,63 @@ use Illuminate\Support\Str;
  */
 class RobotsTxt
 {
-    /**
-     * Save the generated robots.txt content to a file.
-     *
-     * @param  string  $disk
-     * @param  string  $path
-     */
-    public function saveToFile($disk, $path): void
+    protected string $disk;
+    protected string $path;
+    protected string $cacheKey = 'robots-txt.checksum';
+
+    public function __construct()
     {
-        $content = $this->generate();
-        Storage::disk($disk)->put($path, $content);
-        Storage::disk($disk)->setVisibility($path, 'public');
+        $this->disk = Config::get('robots-txt.disk', 'public');
+        $this->path = 'robots-txt/robots.txt';
     }
 
-    /**
-     * Generate the content of the robots.txt file.
-     */
+    public function getContent(): string
+    {
+        if ($this->needsRegeneration()) {
+            $this->regenerate();
+        }
+
+        return Storage::disk($this->disk)->get($this->path);
+    }
+
+    protected function needsRegeneration(): bool
+    {
+        $currentChecksum = $this->computeChecksum();
+        $storedChecksum = Cache::get($this->cacheKey, '');
+
+        return !Storage::disk($this->disk)->exists($this->path) || $currentChecksum !== $storedChecksum;
+    }
+
+    protected function regenerate(): void
+    {
+        $content = $this->generate();
+
+        Storage::disk($this->disk)->put($this->path, $content);
+        Cache::forever($this->cacheKey, $this->computeChecksum());
+    }
+
+    protected function computeChecksum(): string
+    {
+        $appEnv = Config::get('app.env');
+        $appUrl = Config::get('app.url');
+
+        return md5(serialize([
+            Config::get('robots-txt'),
+            $appEnv,
+            $appUrl,
+        ]));
+    }
+
     public function generate(): string
     {
         $appEnv = Config::get('app.env');
         $appUrl = Config::get('app.url');
-        $urlBlockPattern = Config::get('robots-txt.deny_development_url');
 
-        if ($appEnv !== 'production' || Str::contains($appUrl, $urlBlockPattern)) {
+        if ($appEnv !== 'production') {
             return "User-agent: *\nDisallow: /";
         }
 
-        // Otherwise, generate the normal robots.txt content
         $rules = Config::get('robots-txt.user_agents', []);
-        $sitemap = Config::get('robots-txt.sitemap', ['sitemap.xml']);
 
         $txt = '';
 
@@ -62,5 +90,18 @@ class RobotsTxt
         }
 
         return $txt;
+    }
+
+    /**
+     * Save the generated robots.txt content to a file.
+     *
+     * @param string $disk
+     * @param string $path
+     */
+    public function saveToFile(string $disk, string $path): void
+    {
+        $content = $this->generate();
+        Storage::disk($disk)->put($path, $content);
+        Storage::disk($disk)->setVisibility($path, 'public');
     }
 }

@@ -18,7 +18,7 @@ class RobotsTxtSitemapTest extends TestCase
      *
      * @test
      */
-    public function it_includes_a_singular_sitemap_in_robots_txt()
+    public function it_includes_a_singular_sitemap_in_robots_txt(): void
     {
         $robotTxtGenerator = new RobotsTxt();
         $robotsContent = $robotTxtGenerator->generate();
@@ -33,7 +33,7 @@ class RobotsTxtSitemapTest extends TestCase
      *
      * @test
      */
-    public function it_includes_multiple_sitemaps_in_robots_txt()
+    public function it_includes_multiple_sitemaps_in_robots_txt(): void
     {
         $this->setTestConfigurations([
             'robots-txt.sitemap' => [

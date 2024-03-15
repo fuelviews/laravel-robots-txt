@@ -2,7 +2,7 @@
 
 namespace Fuelviews\RobotsTxt\Http\Controllers;
 
-use Fuelviews\RobotsTxt\Services\RobotsTxtService;
+use Fuelviews\RobotsTxt\RobotsTxt;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -17,14 +17,14 @@ class RobotsTxtController extends BaseController
     /**
      * The RobotsTxtService instance.
      */
-    protected RobotsTxtService $robotsTxtService;
+    protected RobotsTxt $robotsTxt;
 
     /**
      * Create a new RobotsTxtController instance.
      */
-    public function __construct(RobotsTxtService $robotsTxtService)
+    public function __construct(RobotsTxt $robotsTxt)
     {
-        $this->robotsTxtService = $robotsTxtService;
+        $this->robotsTxt = $robotsTxt;
     }
 
     /**
@@ -34,8 +34,7 @@ class RobotsTxtController extends BaseController
      */
     public function __invoke(): Response
     {
-        $contents = $this->robotsTxtService->getContent();
-
-        return response($contents, 200)->header('Content-Type', 'text/plain');
+        $contents = $this->robotsTxt->getContent();
+        return response($contents, '200')->header('Content-Type', 'text/plain');
     }
 }
