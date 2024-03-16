@@ -35,6 +35,7 @@ class RobotsTxtController extends BaseController
     public function __invoke(): Response
     {
         $contents = $this->robotsTxt->getContent();
+
         return response($contents, '200')->header('Content-Type', 'text/plain');
     }
 }

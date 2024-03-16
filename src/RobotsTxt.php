@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Storage;
 class RobotsTxt
 {
     protected string $disk;
+
     protected string $path;
+
     protected string $cacheKey = 'robots-txt.checksum';
 
     public function __construct()
@@ -37,7 +39,7 @@ class RobotsTxt
         $currentChecksum = $this->computeChecksum();
         $storedChecksum = Cache::get($this->cacheKey, '');
 
-        return !Storage::disk($this->disk)->exists($this->path) || $currentChecksum !== $storedChecksum;
+        return ! Storage::disk($this->disk)->exists($this->path) || $currentChecksum !== $storedChecksum;
     }
 
     protected function regenerate(): void
@@ -94,9 +96,6 @@ class RobotsTxt
 
     /**
      * Save the generated robots.txt content to a file.
-     *
-     * @param string $disk
-     * @param string $path
      */
     public function saveToFile(string $disk, string $path): void
     {

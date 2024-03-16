@@ -39,7 +39,6 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
         }
     }
 
-
     /**
      * Register package routes.
      *
