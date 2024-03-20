@@ -14,9 +14,6 @@ use Illuminate\Routing\Controller as BaseController;
  */
 class RobotsTxtController extends BaseController
 {
-    /**
-     * The RobotsTxtService instance.
-     */
     protected RobotsTxt $robotsTxt;
 
     /**
