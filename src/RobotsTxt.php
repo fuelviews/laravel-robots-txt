@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class RobotsTxt
 {
     protected string $disk;
-
     protected string $path;
-
     protected string $cacheKey = 'robots-txt.checksum';
 
     public function __construct()
