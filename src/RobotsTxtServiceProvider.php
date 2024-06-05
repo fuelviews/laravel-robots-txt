@@ -46,6 +46,6 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
      */
     public function PackageRegistered(): void
     {
-        Route::get('robots.txt', RobotsTxtController::class);
+        Route::get('robots.txt', RobotsTxtController::class)->name('robots');
     }
 }
