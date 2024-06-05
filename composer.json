@@ -1,6 +1,6 @@
 {
     "name": "fuelviews/laravel-robots-txt",
-    "description": "Fuelviews laravel robots.txt package",
+    "description": "Laravelravel robots.txt package",
     "keywords": [
         "fuelviews",
         "laravel",
@@ -12,17 +12,14 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "thejmitchener",
+            "name": "Joshua Mitchener",
             "email": "support@fuelviews.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.2",
-        "spatie/laravel-package-tools": "^1.14.0",
-        "illuminate/support": "^10.0.0",
-        "illuminate/routing": "^10.0.0",
-        "illuminate/http": "^10.0.0"
+        "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
