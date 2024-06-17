@@ -21,7 +21,7 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('laravel-robots-txt')
+            ->name('robots-txt')
             ->hasConfigFile('robots-txt');
     }
 
