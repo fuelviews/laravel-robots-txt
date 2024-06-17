@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/fix-php-code-style-issues.yml?label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions?query=workflow%3A"Fix+PHP+code+style+issues")
 [![Total Downloads](https://img.shields.io/packagist/dt/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
 
 Laravel robots txt integrates opinionated default robots.txt
@@ -22,14 +22,6 @@ php artisan vendor:publish --provider="Fuelviews\RobotsTxt\RobotsTxtServiceProvi
 This is the contents of the published config file:
 
 ```php
-<?php
-
-/**
- * Configuration File: robots-txt.php
- *
- * This file contains configuration options for the robots.txt generation.
- */
-
 return [
     /**
      * The disk where the robots.txt file will be saved

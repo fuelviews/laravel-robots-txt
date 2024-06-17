@@ -1,6 +1,6 @@
 {
     "name": "fuelviews/laravel-robots-txt",
-    "description": "Laravelravel robots.txt package",
+    "description": "Laravel robots txt package",
     "keywords": [
         "fuelviews",
         "laravel",
@@ -14,6 +14,7 @@
         {
             "name": "Joshua Mitchener",
             "email": "support@fuelviews.com",
+            "homepage": "https://fuelviews.com",
             "role": "Developer"
         }
     ],
