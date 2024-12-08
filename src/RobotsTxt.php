@@ -88,7 +88,7 @@ class RobotsTxt
         $sitemaps = Config::get('robots-txt.sitemap', []);
 
         foreach ($sitemaps as $sitemap) {
-            $txt .= 'Sitemap: '.$appUrl."/"."$sitemap\n";
+            $txt .= 'Sitemap: '.$appUrl.'/'."$sitemap\n";
         }
 
         return $txt;
