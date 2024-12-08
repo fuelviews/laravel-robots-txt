@@ -25,7 +25,7 @@ class RobotsTxtSitemapTest extends TestCase
 
         $baseUrl = config('app.url');
 
-        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'/'.'sitemap.xml', $robotsContent);
     }
 
     /**
@@ -48,8 +48,8 @@ class RobotsTxtSitemapTest extends TestCase
 
         $baseUrl = config('app.url');
 
-        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap.xml', $robotsContent);
-        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap_pages.xml', $robotsContent);
-        $this->assertStringContainsString('Sitemap: '.$baseUrl.'sitemap_posts.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'/'.'sitemap.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'/'.'sitemap_pages.xml', $robotsContent);
+        $this->assertStringContainsString('Sitemap: '.$baseUrl.'/'.'sitemap_posts.xml', $robotsContent);
     }
 }
