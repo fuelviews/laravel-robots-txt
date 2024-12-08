@@ -76,7 +76,7 @@ class RobotsTxtEnvironmentTest extends TestCase
 
         $sitemaps = config('robots-txt.sitemap');
         foreach ($sitemaps as $sitemapPath) {
-            $response->assertSee('Sitemap: '.($baseUrl).$sitemapPath);
+            $response->assertSee('Sitemap: '.($baseUrl).'/'.$sitemapPath);
         }
     }
 }
