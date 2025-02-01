@@ -20,7 +20,7 @@ class RobotsTxtSitemapTest extends TestCase
      */
     public function it_includes_a_singular_sitemap_in_robots_txt(): void
     {
-        $robotTxtGenerator = new RobotsTxt();
+        $robotTxtGenerator = new RobotsTxt;
         $robotsContent = $robotTxtGenerator->generate();
 
         $baseUrl = config('app.url');
@@ -43,7 +43,7 @@ class RobotsTxtSitemapTest extends TestCase
             ],
         ]);
 
-        $robotTxtGenerator = new RobotsTxt();
+        $robotTxtGenerator = new RobotsTxt;
         $robotsContent = $robotTxtGenerator->generate();
 
         $baseUrl = config('app.url');
