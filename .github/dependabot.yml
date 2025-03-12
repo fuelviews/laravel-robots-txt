@@ -4,7 +4,10 @@ updates:
     directory: '/'
     schedule:
       interval: 'monthly'
-    target-branch: main
+    ignore:
+      - dependency-name: "tailwindcss"
+        versions: ['4.*']
+    target-branch: dev
 
   - package-ecosystem: 'composer'
     directory: '/'
@@ -12,13 +15,11 @@ updates:
       interval: 'monthly'
     ignore:
       - dependency-name: "ralphjsmit/laravel-glide"
-      - dependency-name: '*'
-        update-types:
-          - 'version-update:semver-major'
-    target-branch: main
+        versions: ['*']
+    target-branch: dev
 
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'monthly'
-    target-branch: main
+    target-branch: dev
