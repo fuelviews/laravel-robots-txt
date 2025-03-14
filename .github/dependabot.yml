@@ -6,7 +6,7 @@ updates:
       interval: 'monthly'
     ignore:
       - dependency-name: "tailwindcss"
-        versions: 4.*
+        versions: ['4.*']
     target-branch: main
 
   - package-ecosystem: 'composer'
@@ -15,7 +15,7 @@ updates:
       interval: 'monthly'
     ignore:
       - dependency-name: "ralphjsmit/laravel-glide"
-        versions: *
+        versions: ['*']
     target-branch: main
 
   - package-ecosystem: 'github-actions'
