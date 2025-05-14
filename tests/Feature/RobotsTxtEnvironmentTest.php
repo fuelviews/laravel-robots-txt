@@ -3,6 +3,7 @@
 namespace Fuelviews\RobotsTxt\Tests\Feature;
 
 use Fuelviews\RobotsTxt\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class RobotsTxtEnvironmentTest
@@ -14,9 +15,8 @@ class RobotsTxtEnvironmentTest extends TestCase
 {
     /**
      * Test if all paths are disallowed in non-production environments.
-     *
-     * @test
      */
+    #[Test]
     public function it_disallows_in_local_environment()
     {
         $this->setTestConfigurations([
@@ -32,9 +32,8 @@ class RobotsTxtEnvironmentTest extends TestCase
 
     /**
      * Test if all paths are disallowed in non-production environments.
-     *
-     * @test
      */
+    #[Test]
     public function it_disallows_in_development_environment()
     {
         $this->setTestConfigurations([
@@ -50,9 +49,8 @@ class RobotsTxtEnvironmentTest extends TestCase
 
     /**
      * Test if the robots.txt is generated correctly in the production environment.
-     *
-     * @test
      */
+    #[Test]
     public function it_allows_in_production_environment()
     {
         $this->setTestConfigurations([

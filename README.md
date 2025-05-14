@@ -19,38 +19,6 @@ You can manually publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Fuelviews\RobotsTxt\RobotsTxtServiceProvider" --tag="robots-txt-config"
 ```
-This is the contents of the published config file:
-
-```php
-return [
-    /**
-     * The disk where the robots.txt file will be saved
-     */
-    'disk' => 'public',
-
-    /**
-     * User agent rules for different paths
-     */
-    'user_agents' => [
-        '*' => [
-            'Allow' => [
-                '/',
-            ],
-            'Disallow' => [
-                '/admin',
-                '/dashboard',
-            ],
-        ],
-    ],
-
-    /**
-     * Sitemaps to include in robots.txt
-     */
-    'sitemap' => [
-        'sitemap.xml',
-    ],
-];
-```
 
 ## Usage
 
@@ -78,7 +46,8 @@ If you've found a bug regarding security please mail [support@fuelviews.com](mai
 
 ## Credits
 
-- [Thejmitchener](https://github.com/thejmitchener)
+- [Joshua Mitchener](https://github.com/thejmitchener)
+- [Daniel Clark](https://github.com/sweatybreeze)
 - [Fuelviews](https://github.com/fuelviews)
 - [Spatie](https://github.com/spatie)
 - [All Contributors](../../contributors)
