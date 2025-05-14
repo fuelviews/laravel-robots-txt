@@ -4,6 +4,7 @@ namespace Fuelviews\RobotsTxt\Tests\Feature;
 
 use Fuelviews\RobotsTxt\RobotsTxt;
 use Fuelviews\RobotsTxt\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class RobotsTxtSitemapTest
@@ -15,13 +16,12 @@ class RobotsTxtSitemapTest extends TestCase
 {
     /**
      * Test if a singular sitemap is included in the generated robots.txt content.
-     *
-     * @test
      */
+    #[Test]
     public function it_includes_a_singular_sitemap_in_robots_txt(): void
     {
-        $robotTxtGenerator = new RobotsTxt;
-        $robotsContent = $robotTxtGenerator->generate();
+        $robotsTxt = new RobotsTxt;
+        $robotsContent = $robotsTxt->generate();
 
         $baseUrl = config('app.url');
 
@@ -30,9 +30,8 @@ class RobotsTxtSitemapTest extends TestCase
 
     /**
      * Test if multiple sitemaps are included in the generated robots.txt content.
-     *
-     * @test
      */
+    #[Test]
     public function it_includes_multiple_sitemaps_in_robots_txt(): void
     {
         $this->setTestConfigurations([
@@ -43,8 +42,8 @@ class RobotsTxtSitemapTest extends TestCase
             ],
         ]);
 
-        $robotTxtGenerator = new RobotsTxt;
-        $robotsContent = $robotTxtGenerator->generate();
+        $robotsTxt = new RobotsTxt;
+        $robotsContent = $robotsTxt->generate();
 
         $baseUrl = config('app.url');
 

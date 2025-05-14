@@ -5,6 +5,7 @@ namespace Fuelviews\RobotsTxt\Tests\Feature;
 use Fuelviews\RobotsTxt\RobotsTxt;
 use Fuelviews\RobotsTxt\Tests\TestCase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class RobotsTxtDiskTest
@@ -14,13 +15,11 @@ use Illuminate\Support\Facades\Storage;
  */
 class RobotsTxtDiskTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function it_saves_robots_txt_to_specified_disk(): void
     {
-        $robotTxtService = new RobotsTxt;
-        $robotTxtService->saveToFile('public', '/robots-txt/robots.txt');
+        $robotsTxt = new RobotsTxt;
+        $robotsTxt->saveToFile('public', '/robots-txt/robots.txt');
 
         Storage::disk('public')->assertExists('/robots-txt/robots.txt');
     }
