@@ -24,7 +24,7 @@ php artisan vendor:publish --provider="Fuelviews\RobotsTxt\RobotsTxtServiceProvi
 
 To access the robots.txt, navigate to your application's URL and append /robots.txt to it.
 
-For example, if your application is hosted at https://laravel-robots-txt.test, the sitemap can be found at https://aravel-robots-txt.test/robots.txt.
+For example, if your application is hosted at https://laravel-robots-txt.test, the sitemap can be found at https://laravel-robots-txt.test/robots.txt.
 
 ## Testing
 
