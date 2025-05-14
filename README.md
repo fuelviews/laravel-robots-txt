@@ -1,8 +1,8 @@
 # Laravel robots txt package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/fix-php-code-style-issues.yml?label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions?query=workflow%3A"Fix+PHP+code+style+issues")
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions/workflows/run-tests.yml?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/fix-php-code-style-issues.yml?label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions/workflows/php-cs-fixer.yml?query=workflow%3Arun-tests+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
 
 Laravel robots txt integrates opinionated default robots.txt
@@ -24,7 +24,7 @@ php artisan vendor:publish --provider="Fuelviews\RobotsTxt\RobotsTxtServiceProvi
 
 To access the robots.txt, navigate to your application's URL and append /robots.txt to it.
 
-For example, if your application is hosted at http://example.com, the sitemap can be found at http://example.com/robots.txt.
+For example, if your application is hosted at https://laravel-robots-txt.test, the sitemap can be found at https://aravel-robots-txt.test/robots.txt.
 
 ## Testing
 
@@ -39,10 +39,6 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/fuelviews/.github/blob/main/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-If you've found a bug regarding security please mail [support@fuelviews.com](mailto:support@fuelviews.com) instead of using the issue tracker.
 
 ## Credits
 
