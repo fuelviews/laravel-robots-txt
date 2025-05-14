@@ -20,6 +20,7 @@ class TestCase extends Orchestra
      *
      * This method is called before each test method is executed.
      */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -44,7 +45,7 @@ class TestCase extends Orchestra
      *
      * @param  \Illuminate\Foundation\Application  $app
      */
-    public function getEnvironmentSetUp($app): void
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->get('app.url', 'https://example.com/');
         $app['config']->set('app.env', 'production');
