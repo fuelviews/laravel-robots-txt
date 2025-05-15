@@ -9,7 +9,7 @@ Laravel sitemap is a robust and easy-to-use solution designed to automatically g
 
 ## Installation
 
-You can require the package and it's dependencies via composer:
+You can require the package and its dependencies via composer:
 
 ```bash
 composer require fuelviews/laravel-sitemap

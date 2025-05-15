@@ -2,13 +2,17 @@
 
 All notable changes to `laravel-robots-txt` will be documented in this file.
 
-## v0.0.6 - 2025-05-15
+## v0.0.5 - 2025-05-15
 
 ### What's Changed
 
+* Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/fuelviews/laravel-robots-txt/pull/15
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/fuelviews/laravel-robots-txt/pull/16
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/fuelviews/laravel-robots-txt/pull/17
+* Update deps and refactor by @thejmitchener in https://github.com/fuelviews/laravel-robots-txt/pull/18
 * Update CHANGELOG for version 0.0.3, including a dependency bump for poseidon/wait-for-status-checks, and modify README to reflect updated GitHub Actions workflow links. Clean up comments in the robots-txt configuration file for clarity. by @thejmitchener in https://github.com/fuelviews/laravel-robots-txt/pull/19
 
-**Full Changelog**: https://github.com/fuelviews/laravel-robots-txt/compare/v0.0.5...v0.0.6
+**Full Changelog**: https://github.com/fuelviews/laravel-robots-txt/compare/v0.0.4...v0.0.5
 
 ## v0.0.4 - 2024-12-08
 
