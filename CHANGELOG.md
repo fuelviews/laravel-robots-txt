@@ -11,6 +11,14 @@ All notable changes to `laravel-robots-txt` will be documented in this file.
 
 **Full Changelog**: https://github.com/fuelviews/laravel-robots-txt/compare/v0.0.3...v0.0.4
 
+## v0.0.3 - 2024-10-28
+
+### What's Changed
+
+* Bump poseidon/wait-for-status-checks from 0.5.0 to 0.6.0 by @dependabot in https://github.com/fuelviews/laravel-robots-txt/pull/12
+
+**Full Changelog**: https://github.com/fuelviews/laravel-robots-txt/compare/v0.0.2...v0.0.3
+
 ## v0.0.2 - 2024-06-17
 
 ### What's Changed
