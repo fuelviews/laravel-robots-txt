@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Configuration File: robots-txt.php
- *
- * This file contains configuration options for the robots.txt generation.
- */
-
 return [
     /**
      * The disk where the robots.txt file will be saved
