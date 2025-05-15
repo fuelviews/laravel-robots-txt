@@ -39,7 +39,14 @@ jobs:
           DEFAULT_BUMP: patch
           WITH_V: true
           RELEASE_BRANCHES: main
-          BRANCH_HISTORY: last
+          BRANCH_HISTORY: all
+
+      - name: Get previous tag
+        id: previous_tag
+        run: |
+          # Get the second most recent tag (prior to the new tag)
+          previous_tag=$(git tag --sort=-creatordate | grep '^v' | sed -n 2p)
+          echo "tag=$previous_tag" >> "$GITHUB_OUTPUT"
 
       - name: Generate Release Notes
         id: generate_release_notes
@@ -57,20 +64,20 @@ jobs:
             -d @- <<EOF
           {
             "tag_name": "$NEW_TAG",
-            "target_commitish": "main"
+            "target_commitish": "main",
+            "previous_tag_name": "${{ steps.previous_tag.outputs.tag }}"
           }
           EOF
           )
-          # Check if the response contains an error
           if echo "$response" | grep -q '"message":'; then
             echo "Error generating release notes:"
             echo "$response"
             exit 1
           fi
           body=$(echo "$response" | jq -r '.body')
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$body" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "body<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$body" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1

@@ -9,15 +9,14 @@ on:
 
 permissions:
   pull-requests: write
-  contents: write
+  contents: read
 
 jobs:
   openai-pr-description:
     runs-on: ubuntu-22.04
-    # Run the job only if the actor is NOT Dependabot
     if: ${{ !startsWith(github.actor, 'dependabot') }}
     steps:
-      - uses: platisd/openai-pr-description@master
+      - uses: platisd/openai-pr-description@v1.3.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.OPEN_AI_PR_DESCRIPTION_API_KEY }}
