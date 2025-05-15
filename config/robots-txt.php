@@ -6,7 +6,7 @@ return [
      */
     'disk' => 'public',
 
-    /**
+    /**w
      * User agent rules for different paths
      */
     'user_agents' => [

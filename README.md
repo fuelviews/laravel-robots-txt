@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/run-tests.yml?label=tests&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions/workflows/run-tests.yml)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/php-cs-fixer.yml?label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions/workflows/php-cs-fixer.yml)
-
 [![Total Downloads](https://img.shields.io/packagist/dt/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
 
 Laravel robots txt integrates opinionated default robots.txt
@@ -20,44 +19,12 @@ You can manually publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Fuelviews\RobotsTxt\RobotsTxtServiceProvider" --tag="robots-txt-config"
 ```
-This is the contents of the published config file:
-
-```php
-return [
-    /**
-     * The disk where the robots.txt file will be saved
-     */
-    'disk' => 'public',
-
-    /**
-     * User agent rules for different paths
-     */
-    'user_agents' => [
-        '*' => [
-            'Allow' => [
-                '/',
-            ],
-            'Disallow' => [
-                '/admin',
-                '/dashboard',
-            ],
-        ],
-    ],
-
-    /**
-     * Sitemaps to include in robots.txt
-     */
-    'sitemap' => [
-        'sitemap.xml',
-    ],
-];
-```
 
 ## Usage
 
 To access the robots.txt, navigate to your application's URL and append /robots.txt to it.
 
-For example, if your application is hosted at http://example.com, the sitemap can be found at http://example.com/robots.txt.
+For example, if your application is hosted at https://laravel-robots-txt.test, the sitemap can be found at https://laravel-robots-txt.test/robots.txt.
 
 ## Testing
 
@@ -73,13 +40,10 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Please see [CONTRIBUTING](https://github.com/fuelviews/.github/blob/main/CONTRIBUTING.md) for details.
 
-## Security Vulnerabilities
-
-If you've found a bug regarding security please mail [support@fuelviews.com](mailto:support@fuelviews.com) instead of using the issue tracker.
-
 ## Credits
 
-- [Thejmitchener](https://github.com/thejmitchener)
+- [Joshua Mitchener](https://github.com/thejmitchener)
+- [Daniel Clark](https://github.com/sweatybreeze)
 - [Fuelviews](https://github.com/fuelviews)
 - [Spatie](https://github.com/spatie)
 - [All Contributors](../../contributors)

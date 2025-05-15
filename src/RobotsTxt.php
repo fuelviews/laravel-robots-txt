@@ -15,14 +15,13 @@ class RobotsTxt
 {
     protected string $disk;
 
-    protected string $path;
+    protected string $path = 'robots-txt/robots.txt';
 
     protected string $cacheKey = 'robots-txt.checksum';
 
     public function __construct()
     {
         $this->disk = Config::get('robots-txt.disk', 'public');
-        $this->path = 'robots-txt/robots.txt';
     }
 
     public function getContent(): string
@@ -38,8 +37,11 @@ class RobotsTxt
     {
         $currentChecksum = $this->computeChecksum();
         $storedChecksum = Cache::get($this->cacheKey, '');
+        if (! Storage::disk($this->disk)->exists($this->path)) {
+            return true;
+        }
 
-        return ! Storage::disk($this->disk)->exists($this->path) || $currentChecksum !== $storedChecksum;
+        return $currentChecksum !== $storedChecksum;
     }
 
     protected function regenerate(): void
@@ -76,19 +78,20 @@ class RobotsTxt
         $txt = '';
 
         foreach ($rules as $agent => $directives) {
-            $txt .= "User-agent: $agent\n";
+            $txt .= sprintf('User-agent: %s%s', $agent, PHP_EOL);
             foreach ($directives as $directive => $paths) {
                 foreach ($paths as $path) {
-                    $txt .= "$directive: $path\n";
+                    $txt .= sprintf('%s: %s%s', $directive, $path, PHP_EOL);
                 }
             }
+
             $txt .= "\n";
         }
 
         $sitemaps = Config::get('robots-txt.sitemap', []);
 
         foreach ($sitemaps as $sitemap) {
-            $txt .= 'Sitemap: '.$appUrl.'/'."$sitemap\n";
+            $txt .= 'Sitemap: '.$appUrl.'/'.($sitemap . PHP_EOL);
         }
 
         return $txt;
