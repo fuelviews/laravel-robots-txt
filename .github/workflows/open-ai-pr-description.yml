@@ -24,4 +24,4 @@ jobs:
           overwrite_description: true
           temperature: 0.2
           completion_prompt: |
-            Summarize the changes of this PR in no more than 3 sentences.
+            Summarize and list the changes of this PR in no more than 3 sentences.
