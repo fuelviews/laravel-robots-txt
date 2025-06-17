@@ -20,8 +20,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.OPEN_AI_PR_DESCRIPTION_API_KEY }}
-          max_tokens: 100
+          max_tokens: 60
           overwrite_description: true
           temperature: 0.1
           completion_prompt: |
-            Summarize the purpose and importance of this PR in no more than 3 sentences.
+            Summarize the purpose this PR in no more than 2 sentences.
