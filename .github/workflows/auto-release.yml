@@ -41,12 +41,12 @@ jobs:
           RELEASE_BRANCHES: main
           BRANCH_HISTORY: all
 
-      - name: Get previous tag
-        id: previous_tag
+      - name: Get Previous Tag
+        id: get_previous_tag
         run: |
-          # Get the second most recent tag (prior to the new tag)
-          previous_tag=$(git tag --sort=-creatordate | grep '^v' | sed -n 2p)
-          echo "tag=$previous_tag" >> "$GITHUB_OUTPUT"
+          prev_tag=$(git tag --sort=-creatordate | grep '^v' | grep -v '${{ steps.bump_version.outputs.new_tag }}' | head -n 1)
+          echo "Previous tag: $prev_tag"
+          echo "previous_tag=$prev_tag" >> $GITHUB_OUTPUT
 
       - name: Generate Release Notes
         id: generate_release_notes
@@ -54,6 +54,7 @@ jobs:
         env:
           TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           NEW_TAG: ${{ steps.bump_version.outputs.new_tag }}
+          PREVIOUS_TAG: ${{ steps.get_previous_tag.outputs.previous_tag }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
         run: |
@@ -64,20 +65,22 @@ jobs:
             -d @- <<EOF
           {
             "tag_name": "$NEW_TAG",
-            "target_commitish": "main",
-            "previous_tag_name": "${{ steps.previous_tag.outputs.tag }}"
+            "previous_tag_name": "$PREVIOUS_TAG",
+            "target_commitish": "dev"
           }
           EOF
           )
+          
           if echo "$response" | grep -q '"message":'; then
             echo "Error generating release notes:"
             echo "$response"
             exit 1
           fi
+          
           body=$(echo "$response" | jq -r '.body')
-          echo "body<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$body" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$body" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
