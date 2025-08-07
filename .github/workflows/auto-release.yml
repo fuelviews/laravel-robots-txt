@@ -40,6 +40,7 @@ jobs:
           WITH_V: true
           RELEASE_BRANCHES: main
           BRANCH_HISTORY: all
+          CASE_INSENSITIVE: true
 
       - name: Get Previous Tag
         id: get_previous_tag
