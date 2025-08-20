@@ -24,6 +24,11 @@ class RobotsTxt
         $this->disk = Config::get('robots-txt.disk', 'public');
     }
 
+    /**
+     * Get the robots.txt content.
+     *
+     * If regeneration is needed, it will automatically regenerate the file.
+     */
     public function getContent(): string
     {
         if ($this->needsRegeneration()) {
@@ -33,22 +38,42 @@ class RobotsTxt
         return Storage::disk($this->disk)->get($this->path);
     }
 
+    /**
+     * Determine if regeneration is needed.
+     *
+     * Checks if file exists and if configuration has changed.
+     */
     protected function needsRegeneration(): bool
     {
-        $currentChecksum = $this->computeChecksum();
-        $storedChecksum = Cache::get($this->cacheKey, '');
         if (! Storage::disk($this->disk)->exists($this->path)) {
             return true;
         }
 
+        $currentChecksum = $this->computeChecksum();
+        $storedChecksum = Cache::get($this->cacheKey, '');
+
         return $currentChecksum !== $storedChecksum;
     }
 
+    /**
+     * Regenerate and cache the robots.txt file.
+     */
     protected function regenerate(): void
     {
         $content = $this->generate();
 
-        Storage::disk($this->disk)->put($this->path, $content);
+        $filesystem = Storage::disk($this->disk);
+        $filesystem->put($this->path, $content);
+
+        // Set public visibility if supported
+        if (method_exists($filesystem, 'setVisibility')) {
+            try {
+                $filesystem->setVisibility($this->path, 'public');
+            } catch (\Exception $e) {
+                // Silently ignore visibility errors for non-supporting drivers
+            }
+        }
+
         Cache::forever($this->cacheKey, $this->computeChecksum());
     }
 
@@ -91,7 +116,7 @@ class RobotsTxt
         $sitemaps = Config::get('robots-txt.sitemap', []);
 
         foreach ($sitemaps as $sitemap) {
-            $txt .= 'Sitemap: '.$appUrl.'/'.($sitemap . PHP_EOL);
+            $txt .= 'Sitemap: '.$appUrl.'/'.($sitemap.PHP_EOL);
         }
 
         return $txt;

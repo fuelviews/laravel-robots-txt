@@ -1,13 +1,11 @@
 .idea
 .phpunit.cache
-build
-composer.lock
+/build
 coverage
 docs
 phpunit.xml
 phpstan.neon
 testbench.yaml
-vendor
 node_modules
 /.phpunit.cache
 /node_modules
@@ -19,6 +17,7 @@ node_modules
 .env.backup
 .env.production
 .phpunit.result.cache
+.editorconfig
 Homestead.json
 Homestead.yaml
 auth.json
@@ -31,4 +30,9 @@ yarn-error.log
 php.ini
 error_log
 .DS_Store
+*/.DS_Store
+/storage
+/.junie
+.mcp.json
 .php-cs-fixer.cache
+composer.lock

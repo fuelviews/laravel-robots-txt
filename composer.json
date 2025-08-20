@@ -37,8 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Fuelviews\\RobotsTxt\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "Fuelviews\\RobotsTxt\\Tests\\": "tests/"
         }
     },
     "scripts": {

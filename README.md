@@ -1,72 +1,287 @@
-# Laravel sitemap package
+# Laravel Robots.txt Package
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/fuelviews/laravel-sitemap.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-sitemap)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-sitemap/run-tests.yml?label=tests&style=flat-square)](https://github.com/fuelviews/laravel-sitemap/actions/workflows/run-tests.yml)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-sitemap/php-cs-fixer.yml?label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-sitemap/actions/workflows/php-cs-fixer.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/fuelviews/laravel-sitemap.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-sitemap)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/run-tests.yml?label=tests&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions/workflows/run-tests.yml)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/fuelviews/laravel-robots-txt/php-cs-fixer.yml?label=code%20style&style=flat-square)](https://github.com/fuelviews/laravel-robots-txt/actions/workflows/php-cs-fixer.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/fuelviews/laravel-robots-txt.svg?style=flat-square)](https://packagist.org/packages/fuelviews/laravel-robots-txt)
+[![PHP Version](https://img.shields.io/badge/PHP-^8.3-blue.svg?style=flat-square)](https://php.net)
+[![Laravel Version](https://img.shields.io/badge/Laravel-^10|^11|^12-red.svg?style=flat-square)](https://laravel.com)
 
-Laravel sitemap is a robust and easy-to-use solution designed to automatically generate sitemaps for your Laravel application.
+Laravel Robots.txt is a robust and easy-to-use solution designed to automatically generate and serve dynamic robots.txt files for your Laravel application. The package provides intelligent caching, environment-based rules, and seamless integration with your application's routing system.
+
+## Requirements
+
+- PHP ^8.3
+- Laravel ^10.0 || ^11.0 || ^12.0
 
 ## Installation
 
-You can require the package and its dependencies via composer:
+Install the package via Composer:
 
 ```bash
-composer require fuelviews/laravel-sitemap
+composer require fuelviews/laravel-robots-txt
 ```
 
-You can manually publish the config file with:
+Publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="Fuelviews\Sitemap\SitemapServiceProvider" --tag="sitemap-config"
+php artisan vendor:publish --tag="robots-txt-config"
 ```
 
-## Usage
+## Basic Usage
 
-You can also add your models directly by implementing the Spatie\Sitemap\Contracts\Sitemapable interface. You also need to define your post_model in the fv-sitemap.php config file.
+### Automatic Route Registration
+
+The package automatically registers a route at `/robots.txt` that serves your dynamic robots.txt file:
+
+```
+https://yoursite.com/robots.txt
+```
+
+### Configuration
+
+Configure your robots.txt rules in `config/robots-txt.php`:
 
 ```php
-namespace App\Models;
+<?php
 
-use Illuminate\Database\Eloquent\Model;
-use App\Contracts\Sitemapable;
-use Spatie\Sitemap\Tags\Url;
-
-class Post extends Model implements Sitemapable {
+return [
     /**
-     * Convert the Post model instance into a sitemap URL entry.
-     *
-     * @return \Spatie\Sitemap\Tags\Url
+     * The disk where the robots.txt file will be saved
      */
-    public function toSitemapUrl() {
-        $url = Url::create(url("{$this->id}"))
-            ->setLastModificationDate($this->updated_at)
-            ->setChangeFrequency('daily')
-            ->setPriority(0.8);
+    'disk' => 'public',
 
-        return $url;
-    }
-}
+    /**
+     * User agent rules for different paths
+     */
+    'user_agents' => [
+        '*' => [
+            'Allow' => [
+                '/',
+            ],
+            'Disallow' => [
+                '/admin',
+                '/dashboard',
+            ],
+        ],
+        'Googlebot' => [
+            'Allow' => [
+                '/',
+            ],
+            'Disallow' => [
+                '/admin',
+            ],
+        ],
+    ],
+
+    /**
+     * Sitemaps to include in robots.txt
+     */
+    'sitemap' => [
+        'sitemap.xml',
+    ],
+];
 ```
 
-You can generate the sitemap with:
+## Environment Behavior
 
-```bash
-php artisan sitemap:generate
+### Development/Staging Environments
+
+In non-production environments (`app.env` !== 'production'), the package automatically generates a restrictive robots.txt:
+
+```
+User-agent: *
+Disallow: /
 ```
 
-You can link to the sitemap with:
+This prevents search engines from indexing your development or staging sites.
 
-```blade
-route('sitemap')
+### Production Environment
+
+In production, the package uses your configured rules to generate the robots.txt file.
+
+## Advanced Usage
+
+### Using the Facade
+
+```php
+use Fuelviews\RobotsTxt\Facades\RobotsTxt;
+
+// Get robots.txt content
+$content = RobotsTxt::getContent();
+
+// Generate fresh content (bypasses cache)
+$content = RobotsTxt::generate();
+
+// Save to a specific disk and path
+RobotsTxt::saveToFile('s3', 'seo/robots.txt');
 ```
 
+### Direct Class Usage
+
+```php
+use Fuelviews\RobotsTxt\RobotsTxt;
+
+$robotsTxt = app(RobotsTxt::class);
+
+// Check if regeneration is needed
+$content = $robotsTxt->getContent();
+
+// Generate and save to custom location
+$robotsTxt->saveToFile('public', 'custom-robots.txt');
+```
+
+### Named Routes
+
+The package registers a named route that you can reference:
+
+```php
+// In your views
+<link rel="robots" href="{{ route('robots') }}">
+
+// Generate URL
+$robotsUrl = route('robots');
+```
+
+## Configuration Options
+
+### Disk Configuration
+
+Specify which Laravel filesystem disk to use for storing the robots.txt file:
+
+```php
+'disk' => 'public', // or 's3', 'local', etc.
+```
+
+### User Agent Rules
+
+Define rules for different user agents:
+
+```php
+'user_agents' => [
+    '*' => [
+        'Allow' => ['/'],
+        'Disallow' => ['/admin', '/dashboard'],
+    ],
+    'Googlebot' => [
+        'Allow' => ['/api/public/*'],
+        'Disallow' => ['/api/private/*'],
+    ],
+    'Bingbot' => [
+        'Crawl-delay' => ['1'],
+        'Disallow' => ['/admin'],
+    ],
+],
+```
+
+### Sitemap Integration
+
+Include sitemap URLs in your robots.txt:
+
+```php
+'sitemap' => [
+    'sitemap.xml',
+    'posts-sitemap.xml',
+    'categories-sitemap.xml',
+],
+```
+
+This generates:
+
+```
+Sitemap: https://yoursite.com/sitemap.xml
+Sitemap: https://yoursite.com/posts-sitemap.xml
+Sitemap: https://yoursite.com/categories-sitemap.xml
+```
+
+## Caching System
+
+The package uses an intelligent caching system that regenerates the robots.txt file only when:
+
+- The configuration changes
+- The application environment changes
+- The application URL changes
+- The cached file doesn't exist
+
+### Cache Management
+
+Cache is automatically managed, but you can clear it manually:
+
+```php
+use Illuminate\Support\Facades\Cache;
+
+// Clear the robots.txt cache
+Cache::forget('robots-txt.checksum');
+```
+
+## File Storage
+
+### Automatic Storage
+
+The package automatically stores the generated robots.txt file to your configured disk at `robots-txt/robots.txt`.
+
+### Custom Storage
+
+```php
+use Fuelviews\RobotsTxt\Facades\RobotsTxt;
+
+// Save to specific location
+RobotsTxt::saveToFile('s3', 'seo/robots.txt');
+
+// Save to multiple locations
+RobotsTxt::saveToFile('public', 'robots.txt');
+RobotsTxt::saveToFile('backup', 'robots-backup.txt');
+```
+
+## Example Generated Output
+
+### Production Environment
+
+```
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+
+Sitemap: https://yoursite.com/sitemap.xml
+Sitemap: https://yoursite.com/posts-sitemap.xml
+```
+
+### Non-Production Environment
+
+```
+User-agent: *
+Disallow: /
+```
 
 ## Testing
+
+Run the package tests:
 
 ```bash
 composer test
 ```
+
+## Troubleshooting
+
+### Robots.txt Not Updating
+
+If your robots.txt isn't reflecting configuration changes:
+
+1. Clear the application cache: `php artisan cache:clear`
+2. Ensure your configuration is valid
+3. Check file permissions for the storage disk
+
+### Route Conflicts
+
+If you have an existing `/robots.txt` route or static file:
+
+1. Remove any static `public/robots.txt` file (the package automatically removes it)
+2. Ensure no other routes conflict with `/robots.txt`
 
 ## Changelog
 
@@ -76,18 +291,27 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 Please see [CONTRIBUTING](https://github.com/fuelviews/.github/blob/main/CONTRIBUTING.md) for details.
 
+## Security Vulnerabilities
+
+Please review [our security policy](https://github.com/fuelviews/laravel-robots-txt/security/policy) on how to report security vulnerabilities.
+
 ## Credits
 
-- [Thejmitchener](https://github.com/thejmitchener)
-- [Sweatybreeze](https://github.com/sweatybreeze)
+- [Joshua Mitchener](https://github.com/thejmitchener)
+- [Daniel Clark](https://github.com/sweatybreeze)
 - [Fuelviews](https://github.com/fuelviews)
-- [Spatie](https://github.com/spatie)
 - [All Contributors](../../contributors)
 
-## Support us
-
-Fuelviews is a web development agency based in Portland, Maine. You'll find an overview of all our projects [on our website](https://fuelviews.com).
-
-## License
+## 📜 License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+---
+
+<div align="center">
+    <p>Built with ❤️ by the <a href="https://fuelviews.com">Fuelviews</a> team</p>
+    <p>
+        <a href="https://github.com/fuelviews/laravel-cloudflare-cache">⭐ Star us on GitHub</a> •
+        <a href="https://packagist.org/packages/fuelviews/laravel-cloudflare-cache">📦 View on Packagist</a>
+    </p>
+</div>
