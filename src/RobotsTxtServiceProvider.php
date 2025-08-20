@@ -2,6 +2,7 @@
 
 namespace Fuelviews\RobotsTxt;
 
+use Fuelviews\RobotsTxt\Commands\GenerateRobotsTxtCommand;
 use Fuelviews\RobotsTxt\Http\Controllers\RobotsTxtController;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
@@ -22,20 +23,44 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('robots-txt')
-            ->hasConfigFile('robots-txt');
+            ->hasConfigFile('robots-txt')
+            ->hasCommand(GenerateRobotsTxtCommand::class);
+    }
+
+    /**
+     * Register package services.
+     */
+    public function registeringPackage(): void
+    {
+        $this->app->singleton(RobotsTxt::class, function ($app) {
+            return new RobotsTxt();
+        });
     }
 
     /**
      * Bootstrap any application services.
      *
      * This method performs bootstrapping tasks when the package is booted.
+     * It removes any existing static robots.txt file to prevent conflicts.
      */
     public function bootingPackage(): void
+    {
+        $this->removeStaticRobotsFile();
+    }
+
+    /**
+     * Remove static robots.txt file if it exists.
+     *
+     * This prevents conflicts with our dynamic route-based robots.txt.
+     */
+    protected function removeStaticRobotsFile(): void
     {
         $path = public_path('robots.txt');
 
         if (file_exists($path)) {
-            @unlink($path);
+            if (@unlink($path)) {
+                $this->app['log']?->info('Static robots.txt file removed to prevent conflicts with dynamic generation.');
+            }
         }
     }
 
@@ -44,7 +69,7 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
      *
      * This method registers the route for serving the robots.txt file.
      */
-    public function PackageRegistered(): void
+    public function packageRegistered(): void
     {
         Route::get('robots.txt', RobotsTxtController::class)->name('robots');
     }
