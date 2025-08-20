@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-robots-txt` will be documented in this file.
 
+## v1.0.0 - 2025-08-20
+
+### What's Changed
+
+* Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/23
+* Add Laravel Robots.txt package with dynamic generation, caching, and environment-aware rules; include facade, artisan command, route, config, and comprehensive tests; update README and .gitignore accordingly. #major by @thejmitchener in https://github.com/fuelviews/laravel-robots-txt/pull/24
+
+**Full Changelog**: https://github.com/fuelviews/laravel-robots-txt/compare/v0.0.6...v1.0.0
+
 ## v0.0.6 - 2025-05-15
 
 ### What's Changed

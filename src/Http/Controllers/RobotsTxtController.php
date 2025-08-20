@@ -33,6 +33,6 @@ class RobotsTxtController extends BaseController
     {
         $contents = $this->robotsTxt->getContent();
 
-        return response($contents, '200')->header('Content-Type', 'text/plain');
+        return response($contents, 200)->header('Content-Type', 'text/plain');
     }
 }

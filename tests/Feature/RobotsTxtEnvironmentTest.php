@@ -66,7 +66,7 @@ class RobotsTxtEnvironmentTest extends TestCase
         foreach ($userAgentsRules as $userAgent => $rules) {
             foreach ($rules as $ruleType => $paths) {
                 foreach ($paths as $path) {
-                    $testResponse->assertSee('User-agent: ' . $userAgent);
+                    $testResponse->assertSee('User-agent: '.$userAgent);
                     $testResponse->assertSee(sprintf('%s: %s', $ruleType, $path));
                 }
             }
