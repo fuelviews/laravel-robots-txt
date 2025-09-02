@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout the code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Dependabot metadata
         id: metadata
