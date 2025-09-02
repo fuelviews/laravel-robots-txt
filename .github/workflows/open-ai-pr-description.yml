@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: ${{ !startsWith(github.actor, 'dependabot') }}
     steps:
-      - uses: platisd/openai-pr-description@v1.4.0
+      - uses: platisd/openai-pr-description@v1.5.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.OPEN_AI_PR_DESCRIPTION_API_KEY }}
