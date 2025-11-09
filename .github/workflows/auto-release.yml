@@ -33,7 +33,7 @@ jobs:
 
       - name: Bump version and push tag
         id: bump_version
-        uses: anothrNick/github-tag-action@1.73.0
+        uses: anothrNick/github-tag-action@1.75.0
         env:
           GITHUB_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
           DEFAULT_BUMP: patch
