@@ -25,7 +25,7 @@ jobs:
           application_id: ${{ vars.FUELVIEWS_BOT_APP_ID }}
           application_private_key: ${{ secrets.FUELVIEWS_BOT_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: 'main'
           fetch-depth: '0'
