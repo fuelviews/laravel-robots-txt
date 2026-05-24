@@ -25,11 +25,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout the code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v5
 
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v3.1.0
+        uses: dependabot/fetch-metadata@v2.5.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 

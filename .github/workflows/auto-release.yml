@@ -25,7 +25,7 @@ jobs:
           application_id: ${{ vars.FUELVIEWS_BOT_APP_ID }}
           application_private_key: ${{ secrets.FUELVIEWS_BOT_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v5
         with:
           ref: 'main'
           fetch-depth: '0'
@@ -105,7 +105,7 @@ jobs:
 
       - name: Release
         id: release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ steps.get_workflow_token.outputs.token }}
         with:
