@@ -7,6 +7,7 @@ use Fuelviews\RobotsTxt\Facades\RobotsTxt as RobotsTxtFacade;
 use Fuelviews\RobotsTxt\RobotsTxt;
 use Fuelviews\RobotsTxt\RobotsTxtServiceProvider;
 use Fuelviews\RobotsTxt\Tests\TestCase;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -80,23 +81,60 @@ class RobotsTxtServiceProviderTest extends TestCase
     }
 
     #[Test]
-    public function static_robots_file_removal_works(): void
+    public function it_writes_the_static_robots_file_after_boot(): void
     {
-        // Create a mock static robots.txt file
-        $staticRobotsPath = public_path('robots.txt');
-        $directory = dirname($staticRobotsPath);
+        Config::set('app.env', 'production');
+        Config::set('app.url', 'https://example.com');
+        $path = public_path('robots.txt');
+        @unlink($path);
 
-        if (! is_dir($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
-        file_put_contents($staticRobotsPath, 'Static robots.txt content');
-        $this->assertFileExists($staticRobotsPath);
-
-        // Re-boot the service provider to trigger static file removal
         $provider = new RobotsTxtServiceProvider($this->app);
         $provider->bootingPackage();
+        $this->app->boot();
 
-        $this->assertFileDoesNotExist($staticRobotsPath);
+        $this->assertFileExists($path);
+        $this->assertStringContainsString('Sitemap: https://example.com/sitemap.xml', file_get_contents($path));
+
+        @unlink($path);
+    }
+
+    #[Test]
+    public function it_rewrites_a_stale_static_file_when_the_app_url_changes(): void
+    {
+        Config::set('app.env', 'production');
+        $path = public_path('robots.txt');
+        $robots = $this->app->make(RobotsTxt::class);
+
+        Config::set('app.url', 'https://old.example.com');
+        $robots->syncStaticFile();
+        Config::set('app.url', 'https://new.example.com');
+        $robots->syncStaticFile();
+
+        $this->assertStringContainsString('Sitemap: https://new.example.com/sitemap.xml', file_get_contents($path));
+        $this->assertStringNotContainsString('old.example.com', file_get_contents($path));
+
+        @unlink($path);
+    }
+
+    #[Test]
+    public function it_does_not_write_the_static_file_when_disabled(): void
+    {
+        Config::set('robots-txt.static_file', false);
+        $path = public_path('robots.txt');
+        @unlink($path);
+
+        $provider = new RobotsTxtServiceProvider($this->app);
+        $provider->bootingPackage();
+        $this->app->boot();
+
+        $this->assertFileDoesNotExist($path);
+    }
+
+    #[Test]
+    public function it_never_throws_when_the_public_directory_is_missing(): void
+    {
+        $this->app->make(RobotsTxt::class)->syncStaticFile('/nonexistent-dir-for-robots-test/robots.txt');
+
+        $this->assertFileDoesNotExist('/nonexistent-dir-for-robots-test/robots.txt');
     }
 }

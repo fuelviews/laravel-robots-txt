@@ -2,6 +2,26 @@
 
 All notable changes to `laravel-robots-txt` will be documented in this file.
 
+## v1.1.0 - 2026-09-24
+
+### What's Changed
+
+* Bump platisd/openai-pr-description from 1.4.0 to 1.5.0 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/27
+* Bump anothrNick/github-tag-action from 1.73.0 to 1.75.0 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/28
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/26
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/31
+* Bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/30
+* Bump softprops/action-gh-release from 2 to 3 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/33
+* Bump dependabot/fetch-metadata from 2.5.0 to 3.1.0 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/34
+* Bump poseidon/wait-for-status-checks from 0.6.0 to 0.7.0 by @dependabot[bot] in https://github.com/fuelviews/laravel-robots-txt/pull/37
+* Write public/robots.txt instead of deleting it #minor by @dannyclarkdev in https://github.com/fuelviews/laravel-robots-txt/pull/38
+
+### New Contributors
+
+* @dannyclarkdev made their first contribution in https://github.com/fuelviews/laravel-robots-txt/pull/38
+
+**Full Changelog**: https://github.com/fuelviews/laravel-robots-txt/compare/v1.0.0...v1.1.0
+
 ## v1.0.0 - 2025-08-20
 
 ### What's Changed
