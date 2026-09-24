@@ -278,10 +278,15 @@ If your robots.txt isn't reflecting configuration changes:
 
 ### Route Conflicts
 
-If you have an existing `/robots.txt` route or static file:
+The package writes the generated rules to `public/robots.txt` after the
+application boots, and rewrites the file when the rules, `APP_ENV` or
+`APP_URL` change. Web servers that answer `/robots.txt` from disk (for example
+Laravel Forge's default site config, which has an exact `location = /robots.txt`
+block) then return 200. The `/robots.txt` route stays as a fallback.
 
-1. Remove any static `public/robots.txt` file (the package automatically removes it)
-2. Ensure no other routes conflict with `/robots.txt`
+- Do not commit `public/robots.txt`; add it to `.gitignore`. The package owns it.
+- Set `static_file` to `false` in `config/robots-txt.php` to turn this off.
+- Ensure no other routes conflict with `/robots.txt`.
 
 ## Changelog
 

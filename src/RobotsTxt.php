@@ -123,6 +123,46 @@ class RobotsTxt
     }
 
     /**
+     * Keep public/robots.txt in sync with the configured rules.
+     *
+     * Web servers commonly answer /robots.txt from the filesystem before the
+     * request reaches Laravel (Laravel Forge's default site config has an exact
+     * `location = /robots.txt` block with no try_files, plus
+     * `error_page 404 /index.php`). With no file on disk that serves the route's
+     * body with a 404 status, which crawlers treat as "no robots.txt". Writing
+     * the file lets the web server answer 200 directly.
+     *
+     * Rewrites only when the content changed. Never throws: a read-only or
+     * missing public directory falls back to the dynamic route.
+     */
+    public function syncStaticFile(?string $path = null): void
+    {
+        $path ??= public_path('robots.txt');
+
+        try {
+            $content = $this->generate();
+
+            if (is_file($path) && file_get_contents($path) === $content) {
+                return;
+            }
+
+            if (! is_dir(dirname($path)) || ! is_writable(dirname($path))) {
+                return;
+            }
+
+            $temporary = $path.'.'.getmypid().'.tmp';
+
+            if (file_put_contents($temporary, $content) === false) {
+                return;
+            }
+
+            rename($temporary, $path);
+        } catch (\Throwable) {
+            // Fall back to the dynamic route.
+        }
+    }
+
+    /**
      * Save the generated robots.txt content to a file.
      */
     public function saveToFile(string $disk, string $path): void
