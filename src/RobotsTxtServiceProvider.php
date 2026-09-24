@@ -40,28 +40,18 @@ class RobotsTxtServiceProvider extends PackageServiceProvider
     /**
      * Bootstrap any application services.
      *
-     * This method performs bootstrapping tasks when the package is booted.
-     * It removes any existing static robots.txt file to prevent conflicts.
+     * Writes public/robots.txt once the application has booted, so config
+     * overrides applied by other providers during boot are included.
      */
     public function bootingPackage(): void
     {
-        $this->removeStaticRobotsFile();
-    }
-
-    /**
-     * Remove static robots.txt file if it exists.
-     *
-     * This prevents conflicts with our dynamic route-based robots.txt.
-     */
-    protected function removeStaticRobotsFile(): void
-    {
-        $path = public_path('robots.txt');
-
-        if (file_exists($path)) {
-            if (@unlink($path)) {
-                $this->app['log']?->info('Static robots.txt file removed to prevent conflicts with dynamic generation.');
-            }
+        if (! config('robots-txt.static_file', true)) {
+            return;
         }
+
+        $this->app->booted(function (): void {
+            $this->app->make(RobotsTxt::class)->syncStaticFile();
+        });
     }
 
     /**
